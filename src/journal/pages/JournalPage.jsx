@@ -25,7 +25,6 @@ const JournalPage = () => {
         <AddOutlined sx={{fontSize: 30}} />
 
       </IconButton>
-
     </JournalLayout>
 
   )
