@@ -6,7 +6,10 @@ const NoteView = () => {
     return (
         <Grid container direction='row' justifyContent='space-between' sx={{ mb: 1 }}>
             
-            <Grid container alignItems='center' justifyContent='space-between'>
+            <Grid 
+                className="animate__animated animate__fadeIn animate__faster"
+                container alignItems='center' 
+                justifyContent='space-between'>
                 <Grid item>
                     <Typography fontSize={28} fontWeight='light' alignItems='center'>
                         20 de Noviembre, 2023

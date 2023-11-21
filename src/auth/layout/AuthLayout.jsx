@@ -17,7 +17,7 @@ const AuthLayout = ({children, title = ''}) => {
             >
 
                 <Grid item
-                    className="box-shadow"
+                    className="box-shadow animate__animated animate__fadeIn animate__faster"
                     xs={3}
                     sx={{ 
                         width: {md: 450},
