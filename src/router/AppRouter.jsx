@@ -7,6 +7,7 @@ import CheckingAuth from '../ui/components/CheckingAuth'
 import { onAuthStateChanged } from 'firebase/auth'
 import { firebaseAuth } from '../firebase/config'
 import { login, logout } from '../store/auth/authSlice'
+import { startLoadingNotes } from '../store/journal/thunks'
 
 const AppRouter = () => {
 
@@ -20,6 +21,7 @@ const AppRouter = () => {
 
       const {uid, email, displayName, photoURL} = user
       dispatch(login({uid, email, displayName, photoURL}))
+      dispatch(startLoadingNotes())
 
     })
   }, [])
