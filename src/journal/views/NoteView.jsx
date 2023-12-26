@@ -44,44 +44,80 @@ const NoteView = () => {
     }
 
     const onDelete = () => {
-        dispatch(startDeletingNote())
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                dispatch(startDeletingNote())
+            }
+        });
     }
 
     return (
-        <Grid container direction='row' justifyContent='space-between' sx={{ mb: 1 }}>
+        <Grid container direction='row' justifyContent='space-between'>
 
             <Grid
                 className="animate__animated animate__fadeIn animate__faster"
-                container alignItems='center'
-                justifyContent='space-between'>
-                <Grid item>
-                    <Typography fontSize={28} fontWeight='light' alignItems='center'>
-                        {dateString}
-                    </Typography>
+                container >
+                <Grid container>
+                    <Grid item>
+                        <Typography fontSize={28} fontWeight='light' alignItems='center'>
+                            {dateString}
+                        </Typography>
+                    </Grid>
                 </Grid>
 
-                <Grid item>
-                    <input
-                        type="file"
-                        multiple
-                        ref={fileInputRef}
-                        onChange={onFileInputChange}
-                        style={{ display: 'none' }}
-                    />
+                <Grid
+                    container
+                    alignItems='center'
+                    justifyContent='space-between'
+                    sx={{ mb: 1 }}>
 
-                    <IconButton color="primary" disabled={isSaving} onClick={() => fileInputRef.current.click()}>
-                        <UploadOutlined />
-                    </IconButton>
+                    <Grid item>
+                        <Button
+                            onClick={onDelete}
+                            color='error'
+                        >
+                            <DeleteOutline />
+                            Delete
+                        </Button>
+                    </Grid>
 
-                    <Button
-                        disabled={isSaving}
-                        onClick={onSaveNote}
-                        color="primary"
-                        sx={{ padding: 2 }}
-                    >
-                        <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
-                    </Button>
+                    <Grid item>
+                        <input
+                            type="file"
+                            multiple
+                            ref={fileInputRef}
+                            onChange={onFileInputChange}
+                            style={{ display: 'none' }}
+                        />
+
+                        <IconButton color="primary" disabled={isSaving} onClick={() => fileInputRef.current.click()}>
+                            <UploadOutlined />
+                        </IconButton>
+
+                        <Button
+                            disabled={isSaving}
+                            onClick={onSaveNote}
+                            color="primary"
+                            sx={{ padding: 2 }}
+                        >
+                            <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
+                        </Button>
+                    </Grid>
                 </Grid>
+
             </Grid>
 
 
@@ -111,18 +147,9 @@ const NoteView = () => {
                 />
             </Grid>
 
-            <Grid container justifyContent='end'>
-                <Button
-                    onClick={onDelete}
-                    sx={{mt: 2}}
-                    color='error'
-                >
-                    <DeleteOutline />
-                    Borrar
-                </Button>
-            </Grid>
 
-            <ImageGallery 
+
+            <ImageGallery
                 images={note.imageUrls}
             />
 

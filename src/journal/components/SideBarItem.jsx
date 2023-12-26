@@ -1,12 +1,13 @@
 import { TurnedInNot } from '@mui/icons-material'
-import { Grid, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { Grid, ListItem, ListItemButton, ListItemIcon, ListItemText, Skeleton } from '@mui/material'
 import React, { useMemo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setActiveNote } from '../../store/journal/journalSlice'
 
 const SideBarItem = ({title = '', body, id, date, imageUrls = []}) => {
 
     const dispatch = useDispatch()
+    const { isSaving } = useSelector(state => state.journal)
 
     const onClickNote = () => {
         dispatch(setActiveNote({title, body, id, date, imageUrls}))
@@ -19,17 +20,19 @@ const SideBarItem = ({title = '', body, id, date, imageUrls = []}) => {
     }, [title])
 
   return (
-    <ListItem disablePadding>
-        <ListItemButton onClick={onClickNote}>
-            <ListItemIcon>
-                <TurnedInNot />
-            </ListItemIcon>
-            <Grid container>
-                <ListItemText primary={newTitle} sx={{width: '100%'}}/>
-                <ListItemText secondary={body}/>
-            </Grid>
-        </ListItemButton>
-    </ListItem>
+    !isSaving ? 
+                <ListItem disablePadding>
+                    <ListItemButton onClick={onClickNote}>
+                        <ListItemIcon>
+                            <TurnedInNot />
+                        </ListItemIcon>
+                        <Grid container>
+                            <ListItemText primary={newTitle} sx={{width: '100%'}}/>
+                            <ListItemText secondary={body}/>
+                        </Grid>
+                    </ListItemButton>
+                </ListItem>
+            : <Skeleton variant="rectangular" animation="wave" width={210} height={40} sx={{margin: '0.5rem'}} />
   )
 }
 
