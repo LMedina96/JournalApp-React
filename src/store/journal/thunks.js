@@ -12,9 +12,10 @@ export const startNewNote = () => {
         const { uid } = getState().auth
 
         const newNote = {
-            title: 'New Note',
-            body: '',
-            date: new Date().getTime(),
+            title: "",
+            body: "",
+            imageUrls: [],
+            date: new Date().getTime()
         }
 
         const newDoc = doc(collection(firebaseDB, `${uid}/journal/notes`))
@@ -55,18 +56,18 @@ export const loadListNote = (note) => {
 export const startSaveNote = () => {
     return async (dispatch, getState) => {
 
-        dispatch( setSaving() );
+        dispatch(setSaving());
 
         const { uid } = getState().auth;
-        const { active:note } = getState().journal;
+        const { active: note } = getState().journal;
 
         const noteToFireStore = { ...note };
         delete noteToFireStore.id;
-    
-        const docRef = doc( firebaseDB, `${ uid }/journal/notes/${ note.id }` );
-        await setDoc( docRef, noteToFireStore, { merge: true });
 
-        dispatch( noteUpdated( note ) );
+        const docRef = doc(firebaseDB, `${uid}/journal/notes/${note.id}`);
+        await setDoc(docRef, noteToFireStore, { merge: true });
+
+        dispatch(noteUpdated(note));
     }
 }
 
@@ -81,23 +82,23 @@ export const startUploadingFiles = (files = []) => {
         }
 
         const photosUrls = await Promise.all(fileUploadPromises)
-        
+
         dispatch(setPhotosToActiveNote(photosUrls))
     }
 }
 
 export const startDeletingNote = () => {
-    return async(dispatch, getState) => {
+    return async (dispatch, getState) => {
 
-        
-        const {uid} = getState().auth
-        const {active: note} = getState().journal
-        
-        const docRef = doc( firebaseDB, `${ uid }/journal/notes/${ note.id }` );
+
+        const { uid } = getState().auth
+        const { active: note } = getState().journal
+
+        const docRef = doc(firebaseDB, `${uid}/journal/notes/${note.id}`);
         await deleteDoc(docRef)
-        
+
         dispatch(deleteNoteById(note.id))
-        const notes = await loadNotes( uid );
+        const notes = await loadNotes(uid);
         dispatch(savingNote())
         dispatch(setNotes(notes))
     }
