@@ -16,11 +16,10 @@ _Inserta aquí algunas capturas de pantalla de tu aplicación si lo deseas._
 
 1. Clona este repositorio:
 
-   ```bash
-   git clone https://github.com/LMedina96/JournalApp-React
+```bash
+git clone https://github.com/LMedina96/JournalApp-React
 
 Instala las dependencias:
 
-  ```bash
   npm install
   npm run dev
