@@ -12,7 +12,7 @@ export const journalSlice = createSlice({
             state.isSaving = true
         },
         addNewEmptyNote: (state, action) => {
-            state.notes.push( action.payload );
+            state.notes.push(action.payload);
             state.isSaving = false;
         },
         setActiveNote: (state, action) => {
@@ -30,9 +30,9 @@ export const journalSlice = createSlice({
         },
         noteUpdated: (state, action) => {
             state.isSaving = false;
-            state.notes = state.notes.map( note => {
+            state.notes = state.notes.map(note => {
 
-                if ( note.id === action.payload.id ) {
+                if (note.id === action.payload.id) {
                     return action.payload;
                 }
 
@@ -70,4 +70,4 @@ export const {
     setPhotosToActiveNote,
     clearNotesLogout,
     deleteNoteById
- } = journalSlice.actions;
+} = journalSlice.actions;

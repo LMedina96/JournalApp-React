@@ -41,6 +41,7 @@ const NoteView = () => {
         if (target.files === 0) return
 
         dispatch(startUploadingFiles(target.files))
+        onSaveNote()
     }
 
     const onDelete = () => {

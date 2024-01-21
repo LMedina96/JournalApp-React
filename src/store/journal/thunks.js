@@ -68,6 +68,7 @@ export const startSaveNote = () => {
         await setDoc(docRef, noteToFireStore, { merge: true });
 
         dispatch(noteUpdated(note));
+        console.log("llego")
     }
 }
 
